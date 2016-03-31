@@ -10,6 +10,14 @@ const innerButton = <Button>Search</Button>;
 class Lookup extends Component {
   render() {
     let searchResultsStyles = this.props.resultsActive ? 'search-results-active' : 'search-results';
+    let locations           = this.props.locations;
+    console.log(locations);
+
+    locations = locations.map(function(locality, index) {
+      return (
+        <ListGroupItem key={index}>{locality.location}</ListGroupItem>
+      );
+    }, this);
 
     return (
       <div className="Lookup-form">
@@ -28,9 +36,7 @@ class Lookup extends Component {
           styleName={searchResultsStyles}
         >
           <ListGroup fill>
-            <ListGroupItem>Item 1</ListGroupItem>
-            <ListGroupItem>Item 2</ListGroupItem>
-            <ListGroupItem>&hellip;</ListGroupItem>
+            {locations}
           </ListGroup>
         </Panel>
       </div>
@@ -41,9 +47,7 @@ class Lookup extends Component {
     event.stopPropagation();
 
     // Only search the API if we have more than 3 characters
-    if (event.target.value.length >= 3) {
-      LookupActions.search(event.target.value);
-    }
+    LookupActions.search(event.target.value);
   }
 }
 

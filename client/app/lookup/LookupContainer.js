@@ -10,7 +10,8 @@ export default class LookupContainer extends Component {
     super();
 
     this.state = {
-      resultsActive: false
+      resultsActive: false,
+      locations:     []
     }
   }
 
@@ -20,7 +21,12 @@ export default class LookupContainer extends Component {
 
       switch(action.actionType) {
         case LookupConstants.LOOKUP_SEARCH:
-          this.searchAusPostAPI(action.query);
+          if (action.query.length >= 3) {
+            this.searchAusPostAPI(action.query);
+          }
+          else {
+            this.hideLocationResults();
+          }
           break;
 
         default:
@@ -30,9 +36,11 @@ export default class LookupContainer extends Component {
   }
 
   render() {
-    let resultsActive = this.state.resultsActive;
 
-    return <Lookup resultsActive={resultsActive} />;
+    return <Lookup
+      resultsActive={this.state.resultsActive}
+      locations={this.state.locations}
+    />;
   }
 
   searchAusPostAPI(query) {
@@ -51,21 +59,32 @@ export default class LookupContainer extends Component {
       },
       success: (resp) => {
         if (resp && resp.hasOwnProperty('localities')) {
-          this.showLocations(resp.localities);
+          this.showLocationResults(resp.localities);
         }
       }
     });
   }
 
-  showLocations(localities) {
+  showLocationResults(localities) {
     if (localities.hasOwnProperty('locality')) {
-      // Loop through the locations
-      this.setState({
-        resultsActive: true
-      });
 
-      localities.locality.map((locality) => {
-        console.log(locality);
+      let locations = [];
+
+      // Loop through the locations
+      if ( localities.locality.length ) {
+        locations = localities.locality.map((locality) => {
+          return locality;
+        });
+      }
+      // If there is jsut one location...
+      else {
+        locations.push(localities.locality);
+      }
+
+      // Show the results
+      this.setState({
+        resultsActive: true,
+        locations:     locations
       });
     }
     else {
@@ -73,6 +92,13 @@ export default class LookupContainer extends Component {
       this.showNoResultsFound();
     }
   }
+
+  hideLocationResults() {{
+    this.setState({
+      resultsActive: false,
+      locations:     []
+    });
+  }}
 
   showNoResultsFound() {
 

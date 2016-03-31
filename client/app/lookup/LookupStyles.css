@@ -1,0 +1,9 @@
+.search-results {
+  display: none;
+}
+
+.search-results-active {
+  composes: search-results;
+
+  display: block;
+}

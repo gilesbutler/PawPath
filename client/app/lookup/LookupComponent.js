@@ -21,6 +21,9 @@ export default class Lookup extends Component {
 
   handleChange(event) {
     event.stopPropagation();
-    LookupActions.search(event.target.value);
+
+    if (event.target.value.length >= 3) {
+      LookupActions.search(event.target.value);
+    }
   }
 }

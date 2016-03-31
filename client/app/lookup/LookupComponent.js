@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Glyphicon, Button } from 'react-bootstrap';
+import LookupActions from './LookupActions';
 
 const innerGlyphicon = <Glyphicon glyph="search" />;
 const innerButton = <Button>Search</Button>;
@@ -19,6 +20,7 @@ export default class Lookup extends Component {
   }
 
   handleChange(event) {
-    console.log(event.target.value);
+    event.stopPropagation();
+    LookupActions.search(event.target.value);
   }
 }

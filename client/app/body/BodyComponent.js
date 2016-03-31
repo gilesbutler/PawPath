@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Lookup from '../../lookup/containers/lookup';
+import Lookup from '../lookup/LookupContainer';
 
 export default class Body extends Component {
   render() {

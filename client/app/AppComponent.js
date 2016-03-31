@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
-import Header from './header.js';
-import Body from './body.js';
+import Header from './header/HeaderComponent';
+import Body from './body/BodyComponent';
 
 export default class App extends Component {
   render() {

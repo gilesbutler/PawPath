@@ -3,6 +3,7 @@ import reqwest from 'reqwest';
 import Lookup from './LookupComponent';
 import Dispatcher from '../../dispatcher/dispatcher';
 import LookupConstants from '../../constants/LookupConstants';
+import Config from '../../config.js';
 
 export default class LookupContainer extends Component {
 
@@ -56,7 +57,7 @@ export default class LookupContainer extends Component {
     reqwest({
       url: 'https://test.npe.auspost.com.au/api/postcode/search.json?q=' + query,
       headers: {
-        'auth-key': '28744ed5982391881611cca6cf5c240'
+        'auth-key': Config.keys.auspost
       },
       crossOrigin: true,
       method: 'get',

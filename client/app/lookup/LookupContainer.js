@@ -6,6 +6,14 @@ import LookupConstants from '../../constants/LookupConstants';
 
 export default class LookupContainer extends Component {
 
+  constructor() {
+    super();
+
+    this.state = {
+      resultsActive: false
+    }
+  }
+
   componentDidMount() {
     // Register callback to handle all updates
     Dispatcher.register((action) => {
@@ -22,10 +30,13 @@ export default class LookupContainer extends Component {
   }
 
   render() {
-    return <Lookup />;
+    let resultsActive = this.state.resultsActive;
+
+    return <Lookup resultsActive={resultsActive} />;
   }
 
   searchAusPostAPI(query) {
+    // Send the request to Aus Post
     reqwest({
       url: 'https://test.npe.auspost.com.au/api/postcode/search.json?q=' + query,
       headers: {
@@ -33,13 +44,37 @@ export default class LookupContainer extends Component {
       },
       crossOrigin: true,
       method: 'get',
-      error: function (err) {
+      error: (err) => {
         console.log('REQWEST ERROR:');
         console.log(err);
+        this.showNoResultsFound()
       },
-      success: function (resp) {
-        console.log(resp);
+      success: (resp) => {
+        if (resp && resp.hasOwnProperty('localities')) {
+          this.showLocations(resp.localities);
+        }
       }
     });
+  }
+
+  showLocations(localities) {
+    if (localities.hasOwnProperty('locality')) {
+      // Loop through the locations
+      this.setState({
+        resultsActive: true
+      });
+
+      localities.locality.map((locality) => {
+        console.log(locality);
+      });
+    }
+    else {
+      // No localities found
+      this.showNoResultsFound();
+    }
+  }
+
+  showNoResultsFound() {
+
   }
 }

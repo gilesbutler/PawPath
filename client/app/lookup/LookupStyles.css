@@ -7,3 +7,11 @@
 
   display: block;
 }
+
+.search-result {
+  cursor: pointer;
+}
+
+.search-result:hover {
+  background: #f8f8f8;
+}

@@ -5,34 +5,40 @@ import styles from './LookupStyles.css';
 import LookupActions from './LookupActions';
 
 const innerGlyphicon = <Glyphicon glyph="search" />;
-const innerButton = <Button>Search</Button>;
+const innerButton = <Button>SEARCH</Button>;
 
 class Lookup extends Component {
   render() {
     let searchResultsStyles = this.props.resultsActive ? 'search-results-active' : 'search-results';
     let locations           = this.props.locations;
-    console.log(locations);
+    let userLocation        = this.props.userLocation;
 
     locations = locations.map(function(locality, index) {
       return (
-        <ListGroupItem key={index}>{locality.location}</ListGroupItem>
+        <ListGroupItem
+          key={index}
+          onClick={this.handleListItemClick}
+          styleName="search-result"
+        >
+          {locality.location}
+        </ListGroupItem>
       );
     }, this);
 
     return (
-      <div className="Lookup-form">
+      <div>
         <Input
           type="text"
+          value={userLocation}
           bsSize="large"
           placeholder="Enter a postcode or state..."
           addonBefore={innerGlyphicon}
           buttonAfter={innerButton}
-          onChange={this.handleChange}
-          className="Lookup-input"
+          onChange={this.handleInputChange}
+          styleName="search-input"
         />
 
         <Panel
-          ref="lookup-search-results"
           styleName={searchResultsStyles}
         >
           <ListGroup fill>
@@ -43,11 +49,14 @@ class Lookup extends Component {
     );
   }
 
-  handleChange(event) {
+  handleInputChange(event) {
+    LookupActions.search(event.target.value);
+  }
+
+  handleListItemClick(event) {
     event.stopPropagation();
 
-    // Only search the API if we have more than 3 characters
-    LookupActions.search(event.target.value);
+    LookupActions.selectLocation(event.target.innerText);
   }
 }
 

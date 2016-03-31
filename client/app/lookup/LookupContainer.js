@@ -11,7 +11,8 @@ export default class LookupContainer extends Component {
 
     this.state = {
       resultsActive: false,
-      locations:     []
+      locations:     [],
+      userLocation:  ''
     }
   }
 
@@ -20,13 +21,20 @@ export default class LookupContainer extends Component {
     Dispatcher.register((action) => {
 
       switch(action.actionType) {
+
         case LookupConstants.LOOKUP_SEARCH:
+          // Only search the API if we have 3 or more characters
           if (action.query.length >= 3) {
             this.searchAusPostAPI(action.query);
           }
           else {
-            this.hideLocationResults();
+            this.hideLocationResults(action.query);
           }
+          break;
+
+        case LookupConstants.LOOKUP_SELECT_LOCATION:
+          // Set the location to what the user has selected
+          this.selectLocation(action.text);
           break;
 
         default:
@@ -36,10 +44,10 @@ export default class LookupContainer extends Component {
   }
 
   render() {
-
     return <Lookup
       resultsActive={this.state.resultsActive}
       locations={this.state.locations}
+      userLocation={this.state.userLocation}
     />;
   }
 
@@ -59,13 +67,13 @@ export default class LookupContainer extends Component {
       },
       success: (resp) => {
         if (resp && resp.hasOwnProperty('localities')) {
-          this.showLocationResults(resp.localities);
+          this.showLocationResults(resp.localities, query);
         }
       }
     });
   }
 
-  showLocationResults(localities) {
+  showLocationResults(localities, query) {
     if (localities.hasOwnProperty('locality')) {
 
       let locations = [];
@@ -84,7 +92,8 @@ export default class LookupContainer extends Component {
       // Show the results
       this.setState({
         resultsActive: true,
-        locations:     locations
+        locations:     locations,
+        userLocation:  query
       });
     }
     else {
@@ -93,14 +102,23 @@ export default class LookupContainer extends Component {
     }
   }
 
-  hideLocationResults() {{
+  hideLocationResults(query) {
     this.setState({
       resultsActive: false,
-      locations:     []
+      locations:     [],
+      userLocation:  query
     });
-  }}
+  }
 
   showNoResultsFound() {
 
+  }
+
+  selectLocation(location) {
+    this.setState({
+      resultsActive: false,
+      locations:     [],
+      userLocation:  location
+    });
   }
 }

@@ -15,3 +15,7 @@
 .search-result:hover {
   background: #f8f8f8;
 }
+
+.search-input {
+  text-transform: uppercase;
+}

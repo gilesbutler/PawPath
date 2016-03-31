@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Input, Glyphicon, Button, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
 import classNames from 'classnames';
+import Radium from 'radium';
 import LookupActions from './LookupActions';
 
 const innerGlyphicon = <Glyphicon glyph="search" />;

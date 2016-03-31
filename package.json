@@ -40,6 +40,7 @@
     "classnames": "2.2.3",
     "flux": "2.1.1",
     "keymirror": "0.1.1",
+    "radium": "0.17.1",
     "react": "0.14.8",
     "react-bootstrap": "0.28.4",
     "reqwest": "2.0.5"

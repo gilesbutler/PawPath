@@ -63,7 +63,6 @@ export default class LookupContainer extends Component {
       error: (err) => {
         console.log('REQWEST ERROR:');
         console.log(err);
-        this.showNoResultsFound()
       },
       success: (resp) => {
         if (resp && resp.hasOwnProperty('localities')) {
@@ -78,15 +77,13 @@ export default class LookupContainer extends Component {
 
       let locations = [];
 
-      // Loop through the locations
-      if ( localities.locality.length ) {
-        locations = localities.locality.map((locality) => {
-          return locality;
-        });
-      }
       // If there is jsut one location...
-      else {
+      if ( !localities.locality.length ) {
         locations.push(localities.locality);
+      }
+      // Loop through the locations
+      else {
+        locations = localities.locality;
       }
 
       // Show the results
@@ -96,10 +93,6 @@ export default class LookupContainer extends Component {
         userLocation:  query
       });
     }
-    else {
-      // No localities found
-      this.showNoResultsFound();
-    }
   }
 
   hideLocationResults(query) {
@@ -108,10 +101,6 @@ export default class LookupContainer extends Component {
       locations:     [],
       userLocation:  query
     });
-  }
-
-  showNoResultsFound() {
-
   }
 
   selectLocation(location) {

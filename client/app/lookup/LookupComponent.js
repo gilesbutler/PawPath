@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import { Input, Glyphicon, Button, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
-import classNames from 'classnames';
-import Radium from 'radium';
+import CSSModules from 'react-css-modules';
+import styles from './LookupStyles.css';
 import LookupActions from './LookupActions';
 
 const innerGlyphicon = <Glyphicon glyph="search" />;
 const innerButton = <Button>Search</Button>;
 
-// Add Radium decorator
-@Radium
-export default class Lookup extends Component {
+class Lookup extends Component {
   render() {
-    console.log(this.props);
+    let searchResultsStyles = this.props.resultsActive ? 'search-results-active' : 'search-results';
 
     return (
       <div className="Lookup-form">
@@ -27,9 +25,7 @@ export default class Lookup extends Component {
 
         <Panel
           ref="lookup-search-results"
-          style={[
-            searchResultsStyles.base
-          ]}
+          styleName={searchResultsStyles}
         >
           <ListGroup fill>
             <ListGroupItem>Item 1</ListGroupItem>
@@ -51,13 +47,4 @@ export default class Lookup extends Component {
   }
 }
 
-// Styles
-let searchResultsStyles = {
-  base: {
-    display: 'none'
-  },
-
-  active: {
-    display: 'block'
-  }
-};
+export default CSSModules(Lookup, styles);

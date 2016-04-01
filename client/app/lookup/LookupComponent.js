@@ -27,7 +27,7 @@ class Lookup extends Component {
           styleName="search-result"
           title={locality.location}
         >
-          {locality.location} <span>(<em>{locality.state}</em>)</span>
+          {locality.location} <span>(<em>{locality.state} - {locality.postcode}</em>)</span>
         </ListGroupItem>
       );
     }, this);

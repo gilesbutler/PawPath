@@ -31,7 +31,7 @@ export default class LookupContainer extends Component {
               locations:     [],
               userSelection: action.query
             });
-            
+
             this.searchAusPostAPI(action.query);
           }
           else {
@@ -98,6 +98,9 @@ export default class LookupContainer extends Component {
         resultsActive: true,
         locations:     locations
       });
+    }
+    else {
+      this.hideLocationResults(query);
     }
   }
 

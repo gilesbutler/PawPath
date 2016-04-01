@@ -10,7 +10,7 @@ const innerButton = <Button>SEARCH</Button>;
 class Lookup extends Component {
   propTypes: {
     locations:     React.PropTypes.string,
-    userLocation:  React.PropTypes.Array,
+    userSelection: React.PropTypes.Array,
     resultsActive: React.PropTypes.bool,
   }
 

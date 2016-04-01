@@ -13,7 +13,7 @@ export default class LookupContainer extends Component {
     this.state = {
       resultsActive: false,
       locations:     [],
-      userLocation:  ''
+      userSelection: null
     }
   }
 
@@ -27,6 +27,10 @@ export default class LookupContainer extends Component {
           // Only search the API if we have 3 or more characters
           if (action.query.length >= 3) {
             this.searchAusPostAPI(action.query);
+            // We need to set state here to prevent the UI from lagging
+            this.setState({
+              userSelection: action.query
+            });
           }
           else {
             this.hideLocationResults(action.query);
@@ -48,7 +52,7 @@ export default class LookupContainer extends Component {
     return <Lookup
       resultsActive={this.state.resultsActive}
       locations={this.state.locations}
-      userLocation={this.state.userLocation}
+      userSelection={this.state.userSelection}
     />;
   }
 
@@ -78,7 +82,7 @@ export default class LookupContainer extends Component {
 
       let locations = [];
 
-      // If there is jsut one location...
+      // If there is just one location...
       if ( !localities.locality.length ) {
         locations.push(localities.locality);
       }
@@ -90,8 +94,7 @@ export default class LookupContainer extends Component {
       // Show the results
       this.setState({
         resultsActive: true,
-        locations:     locations,
-        userLocation:  query
+        locations:     locations
       });
     }
   }
@@ -100,7 +103,7 @@ export default class LookupContainer extends Component {
     this.setState({
       resultsActive: false,
       locations:     [],
-      userLocation:  query
+      // userLocation:  query
     });
   }
 
@@ -108,7 +111,7 @@ export default class LookupContainer extends Component {
     this.setState({
       resultsActive: false,
       locations:     [],
-      userLocation:  location
+      userSelection: location
     });
   }
 }

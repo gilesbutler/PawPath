@@ -8,10 +8,17 @@ const innerGlyphicon = <Glyphicon glyph="search" />;
 const innerButton = <Button>SEARCH</Button>;
 
 class Lookup extends Component {
+  propTypes: {
+    locations:     React.PropTypes.string,
+    userLocation:  React.PropTypes.Array,
+    resultsActive: React.PropTypes.bool,
+  }
+
   render() {
+
     let searchResultsStyles = this.props.resultsActive ? 'search-results-active' : 'search-results';
     let locations           = this.props.locations;
-    let userLocation        = this.props.userLocation;
+    let userSelection       = this.props.userSelection;
 
     locations = locations.map(function(locality, index) {
       return (
@@ -29,7 +36,7 @@ class Lookup extends Component {
       <div>
         <Input
           type="text"
-          value={userLocation}
+          value={userSelection}
           bsSize="large"
           placeholder="Enter a postcode or state..."
           addonBefore={innerGlyphicon}

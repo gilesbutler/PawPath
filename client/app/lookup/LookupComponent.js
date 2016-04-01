@@ -21,14 +21,14 @@ class Lookup extends Component {
     let userSelection       = this.props.userSelection;
 
     locations = locations.map(function(locality, index) {
-      console.log(locality);
       return (
         <ListGroupItem
           key={index}
           onClick={this.handleListItemClick}
           styleName="search-result"
+          title={locality.location}
         >
-          {locality.location} (<em>{locality.state}</em>)
+          {locality.location} <span>(<em>{locality.state}</em>)</span>
         </ListGroupItem>
       );
     }, this);
@@ -63,8 +63,7 @@ class Lookup extends Component {
 
   handleListItemClick(event) {
     event.stopPropagation();
-
-    LookupActions.selectLocation(event.target.innerText);
+    LookupActions.selectLocation(event.currentTarget.title);
   }
 }
 

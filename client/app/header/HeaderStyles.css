@@ -1,0 +1,11 @@
+.header {
+  font-family: 'Raleway', sans-serif;
+  margin-top: 20px;
+  overflow: hidden;
+  padding: 20px 20px 0;
+}
+
+.panda {
+  float: right;
+  width: 160px;
+}

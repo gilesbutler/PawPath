@@ -103,7 +103,7 @@ export default class LookupContainer extends Component {
     this.setState({
       resultsActive: false,
       locations:     [],
-      // userLocation:  query
+      userSelection: query
     });
   }
 

@@ -5,7 +5,6 @@ import styles from './LookupStyles.css';
 import LookupActions from './LookupActions';
 
 const innerGlyphicon = <Glyphicon glyph="search" />;
-const innerButton = <Button>SEARCH</Button>;
 
 class Lookup extends Component {
   propTypes: {
@@ -41,7 +40,6 @@ class Lookup extends Component {
           bsSize="large"
           placeholder="Enter a postcode or suburb..."
           addonBefore={innerGlyphicon}
-          buttonAfter={innerButton}
           onChange={this.handleInputChange}
           styleName="search-input"
         />

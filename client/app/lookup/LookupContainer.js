@@ -26,11 +26,13 @@ export default class LookupContainer extends Component {
         case LookupConstants.LOOKUP_SEARCH:
           // Only search the API if we have 3 or more characters
           if (action.query.length >= 3) {
-            this.searchAusPostAPI(action.query);
             // We need to set state here to prevent the UI from lagging
             this.setState({
+              locations:     [],
               userSelection: action.query
             });
+            
+            this.searchAusPostAPI(action.query);
           }
           else {
             this.hideLocationResults(action.query);

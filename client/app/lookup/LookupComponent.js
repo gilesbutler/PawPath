@@ -38,7 +38,7 @@ class Lookup extends Component {
           type="text"
           value={userSelection}
           bsSize="large"
-          placeholder="Enter a postcode or state..."
+          placeholder="Enter a postcode or suburb..."
           addonBefore={innerGlyphicon}
           buttonAfter={innerButton}
           onChange={this.handleInputChange}
